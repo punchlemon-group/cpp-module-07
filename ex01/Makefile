@@ -1,14 +1,24 @@
 # ex01 Makefile
 NAME = ex01
 SRC = main.cpp
+OBJDIR = obj
+OBJ = $(OBJDIR)/main.o
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -I.
 
-all:
-	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
+all: $(OBJDIR) $(NAME)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+$(OBJ): $(SRC)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $@
 
 clean:
-	rm -f $(NAME)
+	rm -rf $(OBJDIR)
 
 fclean: clean
 
